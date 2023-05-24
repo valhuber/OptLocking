@@ -1,0 +1,92 @@
+Feature: About Sample # features/about.feature:1
+
+Feature: Application Integration # features/api.feature:1
+
+Feature: Place Order # features/place_order.feature:1
+
+  Scenario: Set Shipped - adjust logic reuse    # features/place_order.feature:30
+    Given Customer Account: ALFKI               # features/steps/place_order.py:48
+    When Order ShippedDate altered (2013-10-13) # features/steps/place_order.py:294
+      Traceback (most recent call last):
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 714, in urlopen
+          httplib_response = self._make_request(
+                             ^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 466, in _make_request
+          six.raise_from(e, None)
+        File "<string>", line 3, in raise_from
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 461, in _make_request
+          httplib_response = conn.getresponse()
+                             ^^^^^^^^^^^^^^^^^^
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
+          response.begin()
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
+          version, status, reason = self._read_status()
+                                    ^^^^^^^^^^^^^^^^^^^
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 287, in _read_status
+          raise RemoteDisconnected("Remote end closed connection without"
+      http.client.RemoteDisconnected: Remote end closed connection without response
+      
+      During handling of the above exception, another exception occurred:
+      
+      Traceback (most recent call last):
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/adapters.py", line 440, in send
+          resp = conn.urlopen(
+                 ^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+          retries = retries.increment(
+                    ^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/util/retry.py", line 550, in increment
+          raise six.reraise(type(error), error, _stacktrace)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/packages/six.py", line 769, in reraise
+          raise value.with_traceback(tb)
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 714, in urlopen
+          httplib_response = self._make_request(
+                             ^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 466, in _make_request
+          six.raise_from(e, None)
+        File "<string>", line 3, in raise_from
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 461, in _make_request
+          httplib_response = conn.getresponse()
+                             ^^^^^^^^^^^^^^^^^^
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
+          response.begin()
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
+          version, status, reason = self._read_status()
+                                    ^^^^^^^^^^^^^^^^^^^
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 287, in _read_status
+          raise RemoteDisconnected("Remote end closed connection without"
+      urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+      
+      During handling of the above exception, another exception occurred:
+      
+      Traceback (most recent call last):
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/behave/model.py", line 1329, in run
+          match.run(runner.context)
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/behave/matchers.py", line 98, in run
+          self.func(context, *args, **kwargs)
+        File "features/steps/place_order.py", line 323, in step_impl
+          r = requests.patch(url=patch_uri, json=patch_args, headers=test_utils.login())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/api.py", line 147, in patch
+          return request('patch', url, data=data, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/api.py", line 61, in request
+          return session.request(method=method, url=url, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/sessions.py", line 529, in request
+          resp = self.send(prep, **send_kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/sessions.py", line 645, in send
+          r = adapter.send(request, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/adapters.py", line 501, in send
+          raise ConnectionError(err, request=request)
+      requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+
+    Then Balance reduced 1086                   # None
+
+Feature: Salary Change # features/salary_change.feature:1
+
+&nbsp;&nbsp;
+Completed at May 23, 2023 22:28:23

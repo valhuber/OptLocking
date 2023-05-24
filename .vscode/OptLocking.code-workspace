@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../safrs"
+		}
+	],
+	"settings": {
+		"workbench.editorAssociations": {
+			"*.md": "vscode.markdown.preview.editor"
+		},
+		"terminal.integrated.env.osx": 
+			{ "PYTHONPATH": "/Users/val/dev/safrs" }
+	}
+}

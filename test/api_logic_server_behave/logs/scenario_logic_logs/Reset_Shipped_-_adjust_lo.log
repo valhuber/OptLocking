@@ -1,0 +1,8 @@
+
+Logic Phase:		BEFORE COMMIT(session=0x1053cb2d0)          						 - 2023-05-23 22:01:51,251 - logic_logger - DEBUG
+Logic Phase:		ROW LOGIC(session=0x1053cb2d0) (sqlalchemy before_flush)			 - 2023-05-23 22:01:51,252 - logic_logger - INFO
+..Order[10643] {Update - client} ShipZip: 12209, Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate: 2013-09-22, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipCountry: Germany, AmountTotal: 1086.00, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x1053c9b90  session: 0x1053cb2d0  ins_upd_dlt: upd - 2023-05-23 22:01:51,252 - logic_logger - INFO
+
+Logic Phase:		BEFORE COMMIT(session=0x1053ca7d0)          						 - 2023-05-23 22:01:51,274 - logic_logger - DEBUG
+
+Logic Phase:		BEFORE COMMIT(session=0x1053cbb50)          						 - 2023-05-23 22:01:51,296 - logic_logger - DEBUG
