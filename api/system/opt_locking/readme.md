@@ -1,3 +1,7 @@
+[This project](https://github.com/valhuber/OptLocking) is the sample app, created by API Logic Server with optimistic locking (not generally released), using 2 patches to work around a bug I discovered in testing.
+
+&nbsp;
+
 ## Problem Statement
 
 Optimistic locking is a valuable feature for interactive systems with typical constraints:
