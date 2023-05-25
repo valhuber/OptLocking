@@ -5,3 +5,5 @@ It is mainly a generated app, then altered to explore a bug described in [the op
 Please click the link to see that file.
 
 > Note: you cannot run this under Codespaces; depends on a patched version of SAFRS.
+
+> Suggestion: open this in GitHub using "Project View" (Shift + ".")
