@@ -50,30 +50,30 @@ SQLAlchemy provides the `loaded_as_persistent` [event](https://docs.sqlalchemy.o
 
 #### 3. The rules engine supports generic `before_logic`
 
-This enables us to check the row compare `CheckSum` values; see [`declare_logic](https://github.com/valhuber/OptLocking/blob/main/logic/declare_logic.py).
-
-[`declare_logic`](/logic/declare_logic.py)
+This enables us to check the row compare `CheckSum` values; see [`logic/declare_logic](/logic/declare_logic.py).
 
 &nbsp;
 
 ### Approach
 
-The approach is summarized in the table below.  See the the code in [`api/system/opt_locking/opt_locking.py`](https://github.com/valhuber/OptLocking/blob/main/api/system/opt_locking/opt_locking.py) for details.
+The approach is summarized in the table below.  See the the code in [`api/system/opt_locking/opt_locking.py`](/api/system/opt_locking/opt_locking.py) for details.
 
 &nbsp;
 
 | Phase | Responsibility | Action | Notes |
 |:-----|:-------|:-------|:----|
-| Design Time | API Logic Server CLI | Declare Checksum | models.py - json_attr |
-| Runtime - Read | System | Compute Checksum | opt_locking#loaded_as (from api_logic_server_run.py) |
+| Design Time | API Logic Server CLI | Declare Checksum | `models.py` - json_attr |
+| Runtime - Read | System | Compute Checksum | `opt_locking#loaded_as` (from api_logic_server_run.py) |
 | Runtime - Call Patch | Custom App Code<br>Admin App | Return as-read-Checksum | See examples below |
-| Runtime - Process Patch | System | Compare CheckSums: as-read vs. current | opt_locking#opt_locking_patch, via logic: generic before event |
+| Runtime - Process Patch | System | Compare CheckSums: as-read vs. current | `opt_locking#opt_locking_patch`, via `logic/declare_logic.py`: generic before event |
 
 &nbsp;
 
 ### Bug: Failing on Patch without CheckSum
 
-The bug is exposed on `Patch` no `CheckSum`, improperly reporting _Sorry, row altered by another user..._.
+This approach works with client supply the `CheckSum` in the `Patch`.
+
+It ***fails*** on `Patch` with no `CheckSum`, improperly reporting _Sorry, row altered by another user..._.
 
 The cause: 
 
