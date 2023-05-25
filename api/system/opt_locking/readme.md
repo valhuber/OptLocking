@@ -88,9 +88,23 @@ One solution is for *safrs patch* to set the `CheckSum` to a special value, whic
 
 ![experiment](/images/patch_exp_test.png)
 
-&nbsp
+&nbsp;
 
-## Samples
+### Other Discussion
+
+Comments:
+
+1. Best name for `CheckSum` (e.g. `Category.S_CheckSum_`)
+2. Admin App needs to include this in Patch...
+
+&nbsp;
+
+&nbsp;
+
+----
+&nbsp;
+
+## Test with cURL
 
 You can explore this using the sample database with the cURL commands below.
 
