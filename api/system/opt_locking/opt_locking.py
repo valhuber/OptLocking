@@ -15,6 +15,17 @@ from config import Config
 
 logger = logging.getLogger(__name__)
 
+def opt_locking_setup(session):
+    pass
+
+    from sqlalchemy import event
+
+    @event.listens_for(session, 'loaded_as_persistent')
+    def receive_loaded_as_persistent(session, instance):
+        "listen for the 'loaded_as_persistent' (get) event - set CheckSum"
+        checksum_value = checksum_row(instance)
+        logger.debug(f'checksum_value: {checksum_value}')
+        setattr(instance, "_check_sum_property", checksum_value)
 
 def checksum(list_arg: list) -> int:
 
@@ -31,7 +42,6 @@ def checksum(list_arg: list) -> int:
     # print(f'checksum[{result}] from row: {list_arg})')
     return result
 
-
 def checksum_row(row: object) -> int:
     inspector = inspect(row)
     mapper = inspector.mapper
@@ -46,7 +56,6 @@ def checksum_row(row: object) -> int:
     logger.debug(f'checksum_row (get) [{return_value}], inspector: {inspector}')
     return return_value
 
-
 def checksum_old_row(logic_row_old: object) -> int:
     attr_list = []
     for each_property in logic_row_old.keys():
@@ -56,19 +65,6 @@ def checksum_old_row(logic_row_old: object) -> int:
     return_value = checksum(attr_list)
     logger.debug(f'checksum_old_row [{return_value}] -- seeing -4130312969102546939 (vs. get: -4130312969102546939-4130312969102546939)')
     return return_value
-
-
-def opt_locking_setup(session):
-    pass
-
-    from sqlalchemy import event
-
-    @event.listens_for(session, 'loaded_as_persistent')
-    def receive_loaded_as_persistent(session, instance):
-        "listen for the 'loaded_as_persistent' (get) event - set CheckSum"
-        checksum_value = checksum_row(instance)
-        logger.debug(f'checksum_value: {checksum_value}')
-        setattr(instance, "_check_sum_property", checksum_value)
 
 
 def opt_lock_patch(logic_row: LogicRow):
