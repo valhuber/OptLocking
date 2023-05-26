@@ -58,6 +58,20 @@ This enables us to check the row compare `CheckSum` values; see [`logic/declare_
 
 &nbsp;
 
+&nbsp;
+
+### Configurable options
+
+Opt Locking is configured on server startup, from the Config file with Env overrides. The options are:
+
+| Option | Included on `Get` | Checked on `Patch` |
+|:----- |:-------|:----|
+| **ignored** | Never | Never |
+| **optional** | Always | Yes - but no error if omitted |
+| **required** | Always | Yes - error if omitted |
+
+&nbsp;
+
 ### Approach
 
 The approach is summarized in the table below.  See the the code in [`api/system/opt_locking/opt_locking.py`](/api/system/opt_locking/opt_locking.py) for details.
@@ -94,13 +108,15 @@ One solution is for *safrs patch* to set the `CheckSum` to a special value, whic
 
 &nbsp;
 
-### Other Discussion
+### Other Discussions
 
 Comments:
 
-1. Best name for `CheckSum` (e.g. `S_CheckSum_` - see Category)
+1. Best name for `CheckSum` (e.g. `S_CheckSum_` - see Category) - Thomas: will be configurable
+    * Thomas will provide guidance on setting SAFRS config options
 2. Admin App needs to include this in Patch...
-3. Admin App reporting "Data Error Logging Disabled" - incorrect excp?
+3. Admin App reporting "Data Error Logging Disabled" - incorrect excp?  
+    * Due to safrs logging level - Val ToDo
 
 &nbsp;
 
