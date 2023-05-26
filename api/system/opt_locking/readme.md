@@ -98,8 +98,9 @@ One solution is for *safrs patch* to set the `CheckSum` to a special value, whic
 
 Comments:
 
-1. Best name for `CheckSum` (e.g. `Category.S_CheckSum_`)
+1. Best name for `CheckSum` (e.g. `S_CheckSum_` - see Category)
 2. Admin App needs to include this in Patch...
+3. Admin App reporting "Data Error Logging Disabled" - incorrect excp?
 
 &nbsp;
 
