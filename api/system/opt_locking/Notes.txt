@@ -1,0 +1,133 @@
+### `Patch`
+
+**Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
+
+To simulate the client:
+1. Use cURL (note: this should fail with constraint violation):
+
+```curl
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Employee/5/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+        "attributes": {
+            "Salary": 97000,
+            "CheckSum": 6785985870086950264,
+            "Proper_Salary": 50000,
+            "Id": 5},
+        "type": "Employee",
+        "id": 5
+    }
+}'
+```
+
+### `Patch` no `CheckSum`
+
+**Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
+
+To simulate the client (same issue occurs in Admin App, which incidentally *should* return the `CheckSum`)
+1. Use cURL (note: this should fail with constraint violation):
+
+```curl
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Employee/5/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+        "attributes": {
+            "Salary": 97000,
+            "Id": 5},
+        "type": "Employee",
+        "id": 5
+    }
+}'
+```
+
+
+### `Get`
+
+Observe that `CheckSum` is returned [6785985870086950264]:  
+
+but in swagger [6785985870086950000]!
+
+```
+curl -X 'GET' \
+  'http://localhost:5656/api/Employee/5/?fields%5BEmployee%5D=Id%2CLastName%2CFirstName%2CTitle%2CTitleOfCourtesy%2CBirthDate%2CHireDate%2CAddress%2CCity%2CRegion%2CPostalCode%2CCountry%2CHomePhone%2CExtension%2CNotes%2CReportsTo%2CPhotoPath%2CEmployeeType%2CSalary%2CWorksForDepartmentId%2COnLoanDepartmentId%2CUnionId%2CDues%2C_check_sum_%2CCheckSum%2C__proper_salary__%2CProperSalary' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/vnd.api+json'
+```
+
+swagger attrs:
+row.property: Employee.EmployeeAuditList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.EmployeeTerritoryList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.OrderList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Id <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.LastName <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.FirstName <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Title <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.TitleOfCourtesy <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.BirthDate <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.HireDate <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Address <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.City <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Region <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.PostalCode <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Country <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.HomePhone <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Extension <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Notes <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.ReportsTo <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.PhotoPath <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.EmployeeType <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Salary <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.WorksForDepartmentId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.OnLoanDepartmentId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.UnionId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Dues <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Manager <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Department <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Department1 <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Union <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Manages <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+checksum_row (get) [6785985870086950264], inspector: <sqlalchemy.orm.state.InstanceState object at 0x107130050>
+checksum_value: 6785985870086950264
+
+
+cURL attrs:
+row.property: Employee.EmployeeAuditList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.EmployeeTerritoryList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.OrderList <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Id <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.LastName <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.FirstName <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Title <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.TitleOfCourtesy <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.BirthDate <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.HireDate <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Address <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.City <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Region <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.PostalCode <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Country <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.HomePhone <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Extension <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Notes <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.ReportsTo <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.PhotoPath <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.EmployeeType <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Salary <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.WorksForDepartmentId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.OnLoanDepartmentId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.UnionId <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Dues <<class 'sqlalchemy.orm.properties.ColumnProperty'>>
+row.property: Employee.Manager <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Department <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Department1 <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Union <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+row.property: Employee.Manages <<class 'sqlalchemy.orm.relationships.RelationshipProperty'>>
+checksum_row (get) [6785985870086950264], inspector: <sqlalchemy.orm.state.InstanceState object at 0x107136450>
+checksum_value: 6785985870086950264
+

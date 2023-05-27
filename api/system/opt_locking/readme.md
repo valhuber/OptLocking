@@ -131,19 +131,6 @@ You can explore this using the sample database with the cURL commands below.
 
 &nbsp;
 
-### `Get`
-
-Observe that `CheckSum` is returned [6785985870086950264]:
-
-```
-curl -X 'GET' \
-  'http://localhost:5656/api/Employee/5/?fields%5BEmployee%5D=Id%2CLastName%2CFirstName%2CTitle%2CTitleOfCourtesy%2CBirthDate%2CHireDate%2CAddress%2CCity%2CRegion%2CPostalCode%2CCountry%2CHomePhone%2CExtension%2CNotes%2CReportsTo%2CPhotoPath%2CEmployeeType%2CSalary%2CWorksForDepartmentId%2COnLoanDepartmentId%2CUnionId%2CDues%2C_check_sum_%2CCheckSum%2C__proper_salary__%2CProperSalary' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/vnd.api+json'
-```
-
-&nbsp;
-
 ### `Patch`
 
 **Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
@@ -186,7 +173,6 @@ curl -X 'PATCH' \
     "data": {
         "attributes": {
             "Salary": 97000,
-            "Proper_Salary": 50000,
             "Id": 5},
         "type": "Employee",
         "id": 5
