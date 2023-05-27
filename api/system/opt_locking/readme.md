@@ -133,7 +133,7 @@ You can explore this using the sample database with the cURL commands below.
 
 ### `Get`
 
-Observe that `CheckSum` is returned:
+Observe that `CheckSum` is returned [6785985870086950264]:
 
 ```
 curl -X 'GET' \
