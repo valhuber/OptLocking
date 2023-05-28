@@ -284,6 +284,8 @@ This should bypass optlock check and report "can't be x"
 
 > FIXME: And *thought* it would fail with jsonapi patch removed... but it worked??
 
+> Trying to recreate the failure of behave tests for Order (below) - succeeds iff jsonapi patch active.  In patch, the hydrated pre-patch row has CheckSum='83926768455664603', patched is 
+
 ```
 curl -X 'PATCH' \
   'http://localhost:5656/api/Category/9/' \
@@ -301,9 +303,9 @@ curl -X 'PATCH' \
 ```
 &nbsp;
 
-### Category 9 `Patch` opt lock caught (Null -> value)
+### Category 9 `Patch` opt lock improperly raised (CheckSum absent, Null -> value)
 
-This should fail "Sorry, row altered by another user..."
+This should fail "Sorry, row altered by another user...".
 
 ```
 curl -X 'PATCH' \
@@ -320,4 +322,43 @@ curl -X 'PATCH' \
     "id": "9"
   }
 }'
+```
+
+### Order 10643 Set Shipped (from null)
+
+This is failing in behave with OptLock error.  Fails here too.
+
+Be sure to refresh `db.sqlite`.
+
+On pre-patch, CheckSum = '6871253564541766803'
+
+Appears to be due to different attribute orders from old/new row, so different checksums.  Further, this appears to be due to renamed attribute; this is *not* the case for Category, so is presumably why it works.
+
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Order/10643/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+        "RequiredDate": "2013-10-13",
+        "Id": 10643
+    },
+    "type": "Order",
+    "id": 10643
+  }
+}'
+```
+
+and the Get also sees CheckSum = 6871253564541766803
+
+ah, the old_row sees CheckSum = '-5169037012034953639' -- more null cols?  No... Cat has client_id
+
+```
+curl -X 'GET' \
+  'http://localhost:5656/api/Order/10643/?include=parent%2COrderDetailList%2CCustomer%2CLocation%2CEmployee%2COrderList&fields%5BOrder%5D=ShipZip%2CId%2CCustomerId%2CEmployeeId%2COrderDate%2CRequiredDate%2CShippedDate%2CShipVia%2CFreight%2CShipName%2CShipAddress%2CShipCity%2CShipRegion%2CShipCountry%2CAmountTotal%2CCountry%2CCity%2CReady%2COrderDetailCount%2CCloneFromOrder%2C_check_sum_%2CCheckSum' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/vnd.api+json'
 ```

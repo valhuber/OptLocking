@@ -64,32 +64,51 @@ def checksum_row(row: object) -> str:
     iterate_properties = mapper.iterate_properties
     attr_list = []
     for each_property in iterate_properties:  # does not include CheckSum
-        logger.debug(f'row.property: {each_property} <{type(each_property)}>')
         if each_property.key == "CheckSum":
             logger.debug(f'checksum_row (CheckSum) - good place for breakpoint')
         if isinstance(each_property, sqlalchemy.orm.properties.ColumnProperty):
+            logger.debug(f'row.property: {each_property} [{getattr(row, each_property.key)}] <{type(each_property)}>')
             attr_list.append(getattr(row, each_property.class_attribute.key))
     return_value = checksum(attr_list)
     inspector_class = inspector.mapper.class_ 
     logger.debug(f'checksum_row (get) [{return_value}], inspector: {inspector}')
     return return_value
 
-def checksum_old_row(logic_row_old: object) -> str:
+def checksum_old_row(logic_row: object) -> str:
     """
     Args:
-        logic_row_old (object): old_row (from LogicBank via declare_logic)
+        logic_row (object): old_row (from LogicBank via declare_logic)
 
     Returns:
         int: hash(old_row attributes), using checksum()
     """
+
+    inspector = inspect(logic_row.row)  # get the mapper from row, values from old_row
+    mapper = inspector.mapper
+    iterate_properties = mapper.iterate_properties
+    attr_list = []
+    for each_property in iterate_properties:  # does not include CheckSum
+        if each_property.key == "CheckSum":
+            logger.debug(f'checksum_row (CheckSum) - good place for breakpoint')
+        if isinstance(each_property, sqlalchemy.orm.properties.ColumnProperty):
+            logger.debug(f'old_row.property: {each_property} [{getattr(logic_row.old_row, each_property.key)}] <{type(each_property)}>')
+            # logger.debug(f'old_row.property: {each_property} [{getattr(logic_row_old, each_property)}] <{type(each_property)}>')
+            attr_list.append(getattr(logic_row.old_row, each_property.class_attribute.key))
+    return_value = checksum(attr_list)
+    inspector_class = inspector.mapper.class_ 
+    logger.debug(f'checksum_row (get) [{return_value}], inspector: {inspector}')
+    return return_value
+
+    """
     attr_list = []
     for each_property in logic_row_old.keys():
-        logger.debug(f'old_row.property: {each_property} <{type(each_property)}>')
+        logger.debug(f'old_row.property: {each_property} [{getattr(logic_row_old, each_property)}] <{type(each_property)}>')
         if True:  # isinstance(each_property, sqlalchemy.orm.properties.ColumnProperty):
             attr_list.append(getattr(logic_row_old, each_property))
     return_value = checksum(attr_list)
-    logger.debug(f'checksum_old_row [{return_value}] -- seeing -4130312969102546939 (vs. get: -4130312969102546939-4130312969102546939)')
+    logger.debug(f'checksum_old_row [{return_value}]')
     return return_value
+    """
 
 
 from safrs.util import classproperty
@@ -124,7 +143,7 @@ def opt_lock_patch(logic_row: LogicRow):
     if hasattr(logic_row.row, "CheckSum"):
         as_read_checksum = logic_row.row.CheckSum
         if as_read_checksum != "!opt_locking_is_patch":
-            old_row_checksum = checksum_old_row(logic_row.old_row)
+            old_row_checksum = checksum_old_row(logic_row)
             if as_read_checksum != old_row_checksum:
                 logger.info(f"optimistic lock failure - as-read vs current: {as_read_checksum} vs {old_row_checksum}")
                 raise ALSError(message="Sorry, row altered by another user - please note changes, cancel and retry")
