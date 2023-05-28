@@ -57,7 +57,7 @@ class Category(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    S_CheckSum_ = _check_sum_
+    CheckSum = _check_sum_
 
 
 class Customer(SAFRSBase, Base):

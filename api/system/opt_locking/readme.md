@@ -115,8 +115,10 @@ Comments:
 1. Best name for `CheckSum` (e.g. `S_CheckSum_` - see Category) - Thomas: will be configurable
     * Thomas will provide guidance on setting SAFRS config options
 2. Admin App needs to include this in Patch...
-3. Admin App reporting "Data Error Logging Disabled" - incorrect excp?  
-    * Due to safrs logging level - Val ToDo
+3. Admin App reporting "Data Error Logging Disabled" - fixed with excp class (thanks, Thomas!)
+4. Note: CheckSums are str (not int - those overflow)
+    * maxint 870744036720833075 [see here](https://stackoverflow.com/questions/47188449/)json-max-int-number
+5. Note: None attributes have special handling
 
 &nbsp;
 
@@ -131,7 +133,7 @@ You can explore this using the sample database with the cURL commands below.
 
 &nbsp;
 
-### `Patch`
+### Emp `Patch`
 
 **Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
 
@@ -157,7 +159,7 @@ curl -X 'PATCH' \
 ```
 &nbsp;
 
-### `Patch` no `CheckSum`
+### Emp `Patch` no `CheckSum`
 
 **Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
 
@@ -181,3 +183,141 @@ curl -X 'PATCH' \
 ```
 &nbsp;
 
+
+### Category Get
+
+```
+curl -X 'GET' \
+  'http://localhost:5656/api/Category/1/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription%2CClient_id%2C_check_sum_%2CCheckSum' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/vnd.api+json'
+```
+Swagger:    "-4130312969102546939",
+curl:       "-4130312969102546939"
+
+```
+curl -X 'GET' \
+  'http://localhost:5656/api/Category/9/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription%2CClient_id%2C_check_sum_%2CCheckSum' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/vnd.api+json'
+```
+
+Swagger:    83926768455664603
+curl:       83926768455664603
+
+&nbsp;
+
+### Category `Patch` opt lock passes (pre-update checksum, no Null)
+
+This should bypass optlock check and report "can't be x"
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/1/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x"
+    },
+    "type": "Category",
+    "id": "1"
+  }
+}'
+```
+
+&nbsp;
+
+### Category `Patch` opt lock caught (No Null)
+
+This should fail "Sorry, row altered by another user..."
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/1/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x",
+      "CheckSum": "should fail"
+    },
+    "type": "Category",
+    "id": "1"
+  }
+}'
+```
+
+&nbsp;
+
+### Category 9 `Patch` opt lock passes (Null -> value)
+
+Category 9 has null Description...
+
+This should bypass optlock check and report "can't be x"
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/9/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x",
+      "CheckSum": "83926768455664603"
+    },
+    "type": "Category",
+    "id": "9"
+  }
+}'
+```
+&nbsp;
+
+&nbsp;
+
+### Category 9 `Patch` opt lock passes (Null -> value, No CheckSum)
+
+This should bypass optlock check and report "can't be x"
+
+> FIXME: And *thought* it would fail with jsonapi patch removed... but it worked??
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/9/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x"
+    },
+    "type": "Category",
+    "id": "9"
+  }
+}'
+```
+&nbsp;
+
+### Category 9 `Patch` opt lock caught (Null -> value)
+
+This should fail "Sorry, row altered by another user..."
+
+```
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/9/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x",
+      "CheckSum": "should fail"
+    },
+    "type": "Category",
+    "id": "9"
+  }
+}'
+```

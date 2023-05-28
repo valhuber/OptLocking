@@ -1,0 +1,102 @@
+{
+    "data": {
+      "attributes": {
+        "Address": "14 Garrett Hill",
+        "BirthDate": "1987-03-04",
+        "CheckSum": 6785985870086950000,
+        "City": "London",
+        "Country": "UK",
+        "Dues": null,
+        "EmployeeType": "Commissioned",
+        "Extension": "3453",
+        "FirstName": "Steven",
+        "HireDate": "2025-10-17",
+        "HomePhone": "(71) 555-4848",
+        "Id": 5,
+        "LastName": "Buchanan",
+        "Notes": "Steven Buchanan graduated from St. Andrews University, Scotland, with a BSC degree in 1976.  Upon joining the company as a sales representative in 1992, he spent 6 months in an orientation program at the Seattle office and then returned to his permanent post in London.  He was promoted to sales manager in March 1993.  Mr. Buchanan has completed the courses 'Successful Telemarketing' and 'International Sales Management.'  He is fluent in French.",
+        "OnLoanDepartmentId": null,
+        "PhotoPath": "Employee/buchanan.jpg",
+        "PostalCode": "SW1 8JR",
+        "ProperSalary": 118750,
+        "Region": "British Isles",
+        "ReportsTo": 2,
+        "Salary": 95000,
+        "Title": "Sales Manager",
+        "TitleOfCourtesy": "Mr.",
+        "UnionId": null,
+        "WorksForDepartmentId": 3,
+        "__proper_salary__": "",
+        "_check_sum_": ""
+      },
+      "id": "5",
+      "links": {
+        "self": "/api/Employee/5/"
+      },
+      "relationships": {
+        "Department": {
+          "data": null,
+          "links": {
+            "self": "/api/Employee/5/Department"
+          }
+        },
+        "Department1": {
+          "data": null,
+          "links": {
+            "self": "/api/Employee/5/Department1"
+          }
+        },
+        "EmployeeAuditList": {
+          "data": [],
+          "links": {
+            "self": "/api/Employee/5/EmployeeAuditList"
+          }
+        },
+        "EmployeeTerritoryList": {
+          "data": [],
+          "links": {
+            "self": "/api/Employee/5/EmployeeTerritoryList"
+          }
+        },
+        "Manager": {
+          "data": null,
+          "links": {
+            "self": "/api/Employee/5/Manager"
+          }
+        },
+        "Manages": {
+          "data": [],
+          "links": {
+            "self": "/api/Employee/5/Manages"
+          }
+        },
+        "OrderList": {
+          "data": [],
+          "links": {
+            "self": "/api/Employee/5/OrderList"
+          }
+        },
+        "Union": {
+          "data": null,
+          "links": {
+            "self": "/api/Employee/5/Union"
+          }
+        }
+      },
+      "type": "Employee"
+    },
+    "included": [],
+    "jsonapi": {
+      "version": "1.0"
+    },
+    "links": {
+      "related": "http://localhost:5656/api/Employee/5/?fields%5BEmployee%5D=Id,LastName,FirstName,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Notes,ReportsTo,PhotoPath,EmployeeType,Salary,WorksForDepartmentId,OnLoanDepartmentId,UnionId,Dues,_check_sum_,CheckSum,__proper_salary__,ProperSalary",
+      "self": "/api/Employee/5/"
+    },
+    "meta": {
+      "count": 1,
+      "instance_meta": {},
+      "limit": 250,
+      "total": 1
+    }
+  }

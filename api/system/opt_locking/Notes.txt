@@ -1,4 +1,57 @@
-### `Patch`
+Maybe we have a precision problem
+
+maxint https://stackoverflow.com/questions/47188449/json-max-int-number
+870744036720833075 max int (per JavaScript)
+6785985870086950264 --> 6785985870086950000
+    The returned json is ..
+
+### Category Get
+
+curl -X 'GET' \
+  'http://localhost:5656/api/Category/1/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription%2CClient_id%2C_check_sum_%2CCheckSum' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/vnd.api+json'
+
+Swagger:    "-68972709646523212",
+curl:       "-68972709646523212"
+
+
+
+### Cat `Patch` opt lock passes (pre-update checksum)
+
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/1/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x"
+    },
+    "type": "Category",
+    "id": "1"
+  }
+}'
+
+
+### Cat `Patch` opt lock caught
+
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Category/1/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "data": {
+    "attributes": {
+      "Description": "x",
+      "CheckSum": "should fail"
+    },
+    "type": "Category",
+    "id": "1"
+  }
+}'
+
+### Emp `Patch`
 
 **Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
 
@@ -14,7 +67,26 @@ curl -X 'PATCH' \
     "data": {
         "attributes": {
             "Salary": 97000,
-            "CheckSum": 6785985870086950264,
+            "CheckSum": "6785985870086950264",
+            "Proper_Salary": 50000,
+            "Id": 5},
+        "type": "Employee",
+        "id": 5
+    }
+}'
+```
+
+
+```curl
+curl -X 'PATCH' \
+  'http://localhost:5656/api/Employee/5/' \
+  -H 'accept: application/vnd.api+json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+        "attributes": {
+            "Salary": 97000,
+            "CheckSum": "BAD CHECKSUM TEST",
             "Proper_Salary": 50000,
             "Id": 5},
         "type": "Employee",

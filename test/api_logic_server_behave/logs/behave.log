@@ -1,92 +1,78 @@
 Feature: About Sample # features/about.feature:1
 
+  Scenario: Transaction Processing                           # features/about.feature:3
+    Given Sample Database                                    # features/steps/about.py:9
+    When Transactions are submitted                          # features/steps/about.py:13
+    Then Enforce business policies with Logic (rules + code) # features/steps/about.py:17
+
 Feature: Application Integration # features/api.feature:1
 
+  Scenario: GET Customer          # features/api.feature:3
+    Given Customer Account: VINET # features/steps/api.py:9
+    When GET Orders API           # features/steps/api.py:13
+    Then VINET retrieved          # features/steps/api.py:25
+
+  Scenario: GET Department                      # features/api.feature:9
+    Given Department 2                          # features/steps/api.py:31
+    When GET Department with SubDepartments API # features/steps/api.py:35
+    Then SubDepartments returned                # features/steps/api.py:39
+
 Feature: Place Order # features/place_order.feature:1
+
+  Scenario: Good Order Custom Service                  # features/place_order.feature:3
+    Given Customer Account: ALFKI                      # features/steps/place_order.py:48
+    When Good Order Placed                             # features/steps/place_order.py:54
+    Then Logic adjusts Balance (demo: chain up)        # features/steps/place_order.py:117
+    Then Logic adjusts Products Reordered              # features/steps/place_order.py:126
+    Then Logic sends email to salesrep                 # features/steps/place_order.py:131
+    Then Logic adjusts aggregates down on delete order # features/steps/place_order.py:149
+
+  Scenario: Bad Order Custom Service          # features/place_order.feature:12
+    Given Customer Account: ALFKI             # features/steps/place_order.py:48
+    When Order Placed with excessive quantity # features/steps/place_order.py:175
+    Then Rejected per Check Credit            # features/steps/place_order.py:219
+
+  Scenario: Alter Item Qty to exceed credit      # features/place_order.feature:18
+    Given Customer Account: ALFKI                # features/steps/place_order.py:48
+    When Order Detail Quantity altered very high # features/steps/place_order.py:231
+    Then Rejected per Check Credit               # features/steps/place_order.py:219
+
+  Scenario: Alter Required Date - adjust logic pruned  # features/place_order.feature:24
+    Given Customer Account: ALFKI                      # features/steps/place_order.py:48
+    When Order RequiredDate altered (2013-10-13)       # features/steps/place_order.py:257
+    Then Balance not adjusted                          # features/steps/place_order.py:283
 
   Scenario: Set Shipped - adjust logic reuse    # features/place_order.feature:30
     Given Customer Account: ALFKI               # features/steps/place_order.py:48
     When Order ShippedDate altered (2013-10-13) # features/steps/place_order.py:294
-      Traceback (most recent call last):
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 714, in urlopen
-          httplib_response = self._make_request(
-                             ^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 466, in _make_request
-          six.raise_from(e, None)
-        File "<string>", line 3, in raise_from
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 461, in _make_request
-          httplib_response = conn.getresponse()
-                             ^^^^^^^^^^^^^^^^^^
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
-          response.begin()
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
-          version, status, reason = self._read_status()
-                                    ^^^^^^^^^^^^^^^^^^^
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 287, in _read_status
-          raise RemoteDisconnected("Remote end closed connection without"
-      http.client.RemoteDisconnected: Remote end closed connection without response
-      
-      During handling of the above exception, another exception occurred:
-      
-      Traceback (most recent call last):
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/adapters.py", line 440, in send
-          resp = conn.urlopen(
-                 ^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 798, in urlopen
-          retries = retries.increment(
-                    ^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/util/retry.py", line 550, in increment
-          raise six.reraise(type(error), error, _stacktrace)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/packages/six.py", line 769, in reraise
-          raise value.with_traceback(tb)
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 714, in urlopen
-          httplib_response = self._make_request(
-                             ^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 466, in _make_request
-          six.raise_from(e, None)
-        File "<string>", line 3, in raise_from
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/urllib3/connectionpool.py", line 461, in _make_request
-          httplib_response = conn.getresponse()
-                             ^^^^^^^^^^^^^^^^^^
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 1374, in getresponse
-          response.begin()
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 318, in begin
-          version, status, reason = self._read_status()
-                                    ^^^^^^^^^^^^^^^^^^^
-        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/http/client.py", line 287, in _read_status
-          raise RemoteDisconnected("Remote end closed connection without"
-      urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
-      
-      During handling of the above exception, another exception occurred:
-      
-      Traceback (most recent call last):
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/behave/model.py", line 1329, in run
-          match.run(runner.context)
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/behave/matchers.py", line 98, in run
-          self.func(context, *args, **kwargs)
-        File "features/steps/place_order.py", line 323, in step_impl
-          r = requests.patch(url=patch_uri, json=patch_args, headers=test_utils.login())
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/api.py", line 147, in patch
-          return request('patch', url, data=data, **kwargs)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/api.py", line 61, in request
-          return session.request(method=method, url=url, **kwargs)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/sessions.py", line 529, in request
-          resp = self.send(prep, **send_kwargs)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/sessions.py", line 645, in send
-          r = adapter.send(request, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        File "/Users/val/dev/servers/install/ApiLogicServer/venv/lib/python3.11/site-packages/requests/adapters.py", line 501, in send
-          raise ConnectionError(err, request=request)
-      requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+    Then Balance reduced 1086                   # features/steps/place_order.py:327
 
-    Then Balance reduced 1086                   # None
+  Scenario: Reset Shipped - adjust logic reuse  # features/place_order.feature:36
+    Given Shipped Order                         # features/steps/place_order.py:337
+    When Order ShippedDate set to None          # features/steps/place_order.py:342
+    Then Logic adjusts Balance by -1086         # features/steps/place_order.py:365
+
+  Scenario: Clone Existing Order              # features/place_order.feature:42
+    Given Shipped Order                       # features/steps/place_order.py:337
+    When Cloning Existing Order               # features/steps/place_order.py:374
+    Then Logic Copies ClonedFrom OrderDetails # features/steps/place_order.py:436
 
 Feature: Salary Change # features/salary_change.feature:1
 
+  Scenario: Audit Salary Change              # features/salary_change.feature:3
+    Given Employee 5 (Buchanan) - Salary 95k # features/steps/salary_change.py:9
+    When Patch Salary to 200k                # features/steps/salary_change.py:13
+    Then Salary_audit row created            # features/steps/salary_change.py:46
+
+  Scenario: Manage ProperSalary              # features/salary_change.feature:8
+    Given Employee 5 (Buchanan) - Salary 95k # features/steps/salary_change.py:9
+    When Retrieve Employee Row               # features/steps/salary_change.py:106
+    Then Verify Contains ProperSalary        # features/steps/salary_change.py:122
+
+  Scenario: Raise Must be Meaningful         # features/salary_change.feature:13
+    Given Employee 5 (Buchanan) - Salary 95k # features/steps/salary_change.py:9
+    When Patch Salary to 96k                 # features/steps/salary_change.py:76
+    Then Reject - Raise too small            # features/steps/salary_change.py:100
+
 &nbsp;&nbsp;
-Completed at May 23, 2023 22:28:23
+Completed at May 27, 2023 19:20:17

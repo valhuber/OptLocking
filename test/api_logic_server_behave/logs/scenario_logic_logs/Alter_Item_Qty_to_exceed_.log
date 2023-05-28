@@ -1,33 +1,33 @@
 
-Logic Phase:		BEFORE COMMIT(session=0x1053cd710)          						 - 2023-05-23 22:01:51,062 - logic_logger - DEBUG
-Logic Phase:		ROW LOGIC(session=0x1053cd710) (sqlalchemy before_flush)			 - 2023-05-23 22:01:51,062 - logic_logger - INFO
-..OrderDetail[1040] {Update - client} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount: 684.0000000000, ShippedDate: None  row: 0x1053ce710  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,063 - logic_logger - INFO
-..OrderDetail[1040] {Formula Amount} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount:  [684.0000000000-->] 50616.0000000000, ShippedDate: None  row: 0x1053ce710  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,063 - logic_logger - INFO
-..OrderDetail[1040] {Prune Formula: ShippedDate [['Order.ShippedDate']]} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount:  [684.0000000000-->] 50616.0000000000, ShippedDate: None  row: 0x1053ce710  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,063 - logic_logger - INFO
-....Product[28] {Update - Adjusting Product: UnitsShipped} Id: 28, ProductName: Rössle Sauerkraut, SupplierId: 12, CategoryId: 7, QuantityPerUnit: 25 - 825 g cans, UnitPrice: 45.6000000000, UnitsInStock: 26, UnitsOnOrder: 0, ReorderLevel: 0, Discontinued: 1, UnitsShipped:  [0-->] 1095  row: 0x1053b65d0  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,064 - logic_logger - INFO
-....Product[28] {Formula UnitsInStock} Id: 28, ProductName: Rössle Sauerkraut, SupplierId: 12, CategoryId: 7, QuantityPerUnit: 25 - 825 g cans, UnitPrice: 45.6000000000, UnitsInStock:  [26-->] -1069, UnitsOnOrder: 0, ReorderLevel: 0, Discontinued: 1, UnitsShipped:  [0-->] 1095  row: 0x1053b65d0  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,065 - logic_logger - INFO
-....Order[10643] {Update - Adjusting Order: AmountTotal} ShipZip: 12209, Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate: 2013-09-22, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipCountry: Germany, AmountTotal:  [1086.00-->] 51018.0000000000, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x1053cf450  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,066 - logic_logger - INFO
-......Customer[ALFKI] {Update - Adjusting Customer: Balance} Id: ALFKI, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Address: Obere Str. 57A, City: Berlin, Region: Western Europe, PostalCode: 12209, Country: Germany, Phone: 030-0074321, Fax: 030-0076545, Balance:  [2102.0000000000-->] 52034.0000000000, CreditLimit: 2300.0000000000, OrderCount: 15, UnpaidOrderCount: 10, Client_id: 1  row: 0x1053cff10  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,068 - logic_logger - INFO
-......Customer[ALFKI] {Constraint Failure: balance (52034.00) exceeds credit (2300.00)} Id: ALFKI, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Address: Obere Str. 57A, City: Berlin, Region: Western Europe, PostalCode: 12209, Country: Germany, Phone: 030-0074321, Fax: 030-0076545, Balance:  [2102.0000000000-->] 52034.0000000000, CreditLimit: 2300.0000000000, OrderCount: 15, UnpaidOrderCount: 10, Client_id: 1  row: 0x1053cff10  session: 0x1053cd710  ins_upd_dlt: upd - 2023-05-23 22:01:51,068 - logic_logger - INFO
+Logic Phase:		BEFORE COMMIT(session=0x107b44a50)          						 - 2023-05-27 19:20:16,553 - logic_logger - DEBUG
+Logic Phase:		ROW LOGIC(session=0x107b44a50) (sqlalchemy before_flush)			 - 2023-05-27 19:20:16,553 - logic_logger - INFO
+..OrderDetail[1040] {Update - client} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount: 684.0000000000, ShippedDate: None  row: 0x107b457d0  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,553 - logic_logger - INFO
+..OrderDetail[1040] {Formula Amount} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount:  [684.0000000000-->] 50616.0000000000, ShippedDate: None  row: 0x107b457d0  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,554 - logic_logger - INFO
+..OrderDetail[1040] {Prune Formula: ShippedDate [['Order.ShippedDate']]} Id: 1040, OrderId: 10643, ProductId: 28, UnitPrice: 45.6000000000, Quantity:  [15-->] 1110, Discount: 0.25, Amount:  [684.0000000000-->] 50616.0000000000, ShippedDate: None  row: 0x107b457d0  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,554 - logic_logger - INFO
+....Product[28] {Update - Adjusting Product: UnitsShipped} Id: 28, ProductName: Rössle Sauerkraut, SupplierId: 12, CategoryId: 7, QuantityPerUnit: 25 - 825 g cans, UnitPrice: 45.6000000000, UnitsInStock: 26, UnitsOnOrder: 0, ReorderLevel: 0, Discontinued: 1, UnitsShipped:  [0-->] 1095  row: 0x107b13b90  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,555 - logic_logger - INFO
+....Product[28] {Formula UnitsInStock} Id: 28, ProductName: Rössle Sauerkraut, SupplierId: 12, CategoryId: 7, QuantityPerUnit: 25 - 825 g cans, UnitPrice: 45.6000000000, UnitsInStock:  [26-->] -1069, UnitsOnOrder: 0, ReorderLevel: 0, Discontinued: 1, UnitsShipped:  [0-->] 1095  row: 0x107b13b90  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,555 - logic_logger - INFO
+....Order[10643] {Update - Adjusting Order: AmountTotal} ShipZip: 12209, Id: 10643, CustomerId: ALFKI, EmployeeId: 6, OrderDate: 2013-08-25, RequiredDate: 2013-09-22, ShippedDate: None, ShipVia: 1, Freight: 29.4600000000, ShipName: Alfreds Futterkiste, ShipAddress: Obere Str. 57, ShipCity: Berlin, ShipRegion: Western Europe, ShipCountry: Germany, AmountTotal:  [1086.00-->] 51018.0000000000, Country: None, City: None, Ready: True, OrderDetailCount: 3, CloneFromOrder: None  row: 0x107b3a450  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,558 - logic_logger - INFO
+......Customer[ALFKI] {Update - Adjusting Customer: Balance} Id: ALFKI, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Address: Obere Str. 57A, City: Berlin, Region: Western Europe, PostalCode: 12209, Country: Germany, Phone: 030-0074321, Fax: 030-0076545, Balance:  [2102.0000000000-->] 52034.0000000000, CreditLimit: 2300.0000000000, OrderCount: 15, UnpaidOrderCount: 10, Client_id: 1  row: 0x107b48c50  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,560 - logic_logger - INFO
+......Customer[ALFKI] {Constraint Failure: balance (52034.00) exceeds credit (2300.00)} Id: ALFKI, CompanyName: Alfreds Futterkiste, ContactName: Maria Anders, ContactTitle: Sales Representative, Address: Obere Str. 57A, City: Berlin, Region: Western Europe, PostalCode: 12209, Country: Germany, Phone: 030-0074321, Fax: 030-0076545, Balance:  [2102.0000000000-->] 52034.0000000000, CreditLimit: 2300.0000000000, OrderCount: 15, UnpaidOrderCount: 10, Client_id: 1  row: 0x107b48c50  session: 0x107b44a50  ins_upd_dlt: upd - 2023-05-27 19:20:16,561 - logic_logger - INFO
 
-Rules Fired:		## - 2023-05-23 22:01:51,068 - logic_logger - INFO
-  Customer		## - 2023-05-23 22:01:51,068 - logic_logger - INFO
-    1. Derive Customer.Balance as Sum(Order.AmountTotal Where <function declare_logic.<locals>.<lambda> at 0x10468c540>)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    2. Derive Customer.UnpaidOrderCount as Count(<class 'database.models.Order'> Where <function declare_logic.<locals>.<lambda> at 0x104783ce0>)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    3. RowEvent Customer.customer_defaults() 		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    4. Constraint Function: None 		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    5. Derive Customer.OrderCount as Count(<class 'database.models.Order'> Where None)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-  Order		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    6. RowEvent Order.order_defaults() 		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    7. Derive Order.OrderDetailCount as Count(<class 'database.models.OrderDetail'> Where None)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    8. Derive Order.AmountTotal as Sum(OrderDetail.Amount Where None)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-  OrderDetail		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    9. Derive OrderDetail.Amount as Formula (1): as_expression=lambda row: row.UnitPrice * row.Qua [...]		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    10. RowEvent OrderDetail.order_detail_defaults() 		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-  Product		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    11. Derive Product.UnitsShipped as Sum(OrderDetail.Quantity Where <function declare_logic.<locals>.<lambda> at 0x104783f60>)		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
-    12. Derive Product.UnitsInStock as Formula (1): <function>		## - 2023-05-23 22:01:51,069 - logic_logger - INFO
+Rules Fired:		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+  Customer		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    1. Derive Customer.UnpaidOrderCount as Count(<class 'database.models.Order'> Where <function declare_logic.<locals>.<lambda> at 0x10727bce0>)		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    2. Constraint Function: None 		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    3. Derive Customer.OrderCount as Count(<class 'database.models.Order'> Where None)		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    4. RowEvent Customer.customer_defaults() 		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    5. Derive Customer.Balance as Sum(Order.AmountTotal Where <function declare_logic.<locals>.<lambda> at 0x106edc900>)		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+  Order		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    6. Derive Order.AmountTotal as Sum(OrderDetail.Amount Where None)		## - 2023-05-27 19:20:16,561 - logic_logger - INFO
+    7. Derive Order.OrderDetailCount as Count(<class 'database.models.OrderDetail'> Where None)		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+    8. RowEvent Order.order_defaults() 		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+  OrderDetail		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+    9. RowEvent OrderDetail.order_detail_defaults() 		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+    10. Derive OrderDetail.Amount as Formula (1): as_expression=lambda row: row.UnitPrice * row.Qua [...]		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+  Product		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+    11. Derive Product.UnitsShipped as Sum(OrderDetail.Quantity Where <function declare_logic.<locals>.<lambda> at 0x1072d8360>)		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
+    12. Derive Product.UnitsInStock as Formula (1): <function>		## - 2023-05-27 19:20:16,562 - logic_logger - INFO
 
- - 2023-05-23 22:01:51,069 - logic_logger - INFO
+ - 2023-05-27 19:20:16,562 - logic_logger - INFO
 
-Logic Phase:		BEFORE COMMIT(session=0x105383050)          						 - 2023-05-23 22:01:51,094 - logic_logger - DEBUG
+Logic Phase:		BEFORE COMMIT(session=0x107b52590)          						 - 2023-05-27 19:20:16,593 - logic_logger - DEBUG

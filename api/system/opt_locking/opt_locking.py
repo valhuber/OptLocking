@@ -29,7 +29,7 @@ def opt_locking_setup(session):
         logger.debug(f'checksum_value: {checksum_value}')
         setattr(instance, "_check_sum_property", checksum_value)
 
-def checksum(list_arg: list) -> int:
+def checksum(list_arg: list) -> str:
     """
     Args:
         list_arg (list): list of (rows') attribute values
@@ -48,9 +48,10 @@ def checksum(list_arg: list) -> int:
                 real_tuple.append(each_entry)
     result = hash(tuple(real_tuple))
     # print(f'checksum[{result}] from row: {list_arg})')
+    result = str(result)  # maxint 870744036720833075 https://stackoverflow.com/questions/47188449/json-max-int-number
     return result
 
-def checksum_row(row: object) -> int:
+def checksum_row(row: object) -> str:
     """
     Args:
         row (object): SQLAlchemy row
@@ -62,8 +63,10 @@ def checksum_row(row: object) -> int:
     mapper = inspector.mapper
     iterate_properties = mapper.iterate_properties
     attr_list = []
-    for each_property in iterate_properties:
+    for each_property in iterate_properties:  # does not include CheckSum
         logger.debug(f'row.property: {each_property} <{type(each_property)}>')
+        if each_property.key == "CheckSum":
+            logger.debug(f'checksum_row (CheckSum) - good place for breakpoint')
         if isinstance(each_property, sqlalchemy.orm.properties.ColumnProperty):
             attr_list.append(getattr(row, each_property.class_attribute.key))
     return_value = checksum(attr_list)
@@ -71,7 +74,7 @@ def checksum_row(row: object) -> int:
     logger.debug(f'checksum_row (get) [{return_value}], inspector: {inspector}')
     return return_value
 
-def checksum_old_row(logic_row_old: object) -> int:
+def checksum_old_row(logic_row_old: object) -> str:
     """
     Args:
         logic_row_old (object): old_row (from LogicBank via declare_logic)
@@ -89,6 +92,18 @@ def checksum_old_row(logic_row_old: object) -> int:
     return return_value
 
 
+from safrs.util import classproperty
+from safrs.errors import JsonapiError
+from http import HTTPStatus
+
+class ALSError(JsonapiError):
+    
+    def __init__(self, message, status_code=HTTPStatus.BAD_REQUEST):
+        super().__init__()
+        self.message = message
+        self.status_code = status_code
+
+
 def opt_lock_patch(logic_row: LogicRow):
     """
     Called by logic/declare_logic in early (before logic) event for updates (patch)
@@ -102,8 +117,8 @@ def opt_lock_patch(logic_row: LogicRow):
         logic_row (LogicRow): LogicBank row being updated
 
     Raises:
-        Exception: "Sorry, row altered by another user - please note changes, cancel and retry"
-        Exception: "Optimistic Locking error - required CheckSum not present"
+        ALSError: "Sorry, row altered by another user - please note changes, cancel and retry"
+        ALSError: "Optimistic Locking error - required CheckSum not present"
     """
     logger.debug(f'Opt Lock Patch')
     if hasattr(logic_row.row, "CheckSum"):
@@ -112,9 +127,9 @@ def opt_lock_patch(logic_row: LogicRow):
             old_row_checksum = checksum_old_row(logic_row.old_row)
             if as_read_checksum != old_row_checksum:
                 logger.info(f"optimistic lock failure - as-read vs current: {as_read_checksum} vs {old_row_checksum}")
-                raise Exception("Sorry, row altered by another user - please note changes, cancel and retry")
+                raise ALSError(message="Sorry, row altered by another user - please note changes, cancel and retry")
     else:
         if Config.OPT_LOCKING == OptLocking.OPTIONAL.value:
             logger.debug(f'No CheckSum -- ok, configured as optional')
         else:
-            raise Exception("Optimistic Locking error - required CheckSum not present")
+            raise ALSError("Optimistic Locking error - required CheckSum not present")
