@@ -33,3 +33,5 @@ python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-ur
 5. Install yaml (a surprise)
 
 sudo pip install pyyaml
+
+But, fails in flask_init: ModuleNotFoundError: No module named 'flask_swagger_ui'
