@@ -316,7 +316,7 @@ curl -X 'PATCH' \
   "data": {
     "attributes": {
       "Description": "x",
-      "CheckSum": "should fail"
+      "S_CheckSum": "should fail"
     },
     "type": "Category",
     "id": "9"

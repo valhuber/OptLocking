@@ -44,7 +44,7 @@ class Role(SAFRSBase, Baseauthentication, db.Model, UserMixin):  # type: ignore
     name = Column(String(64), primary_key=True)
     allow_client_generated_ids = True
 
-    UserRoleList = relationship('UserRole', cascade_backrefs=True, backref='Role')
+    UserRoleList = relationship('UserRole', cascade_backrefs=False, backref='Role')
 
 
     @jsonapi_attr
@@ -79,8 +79,8 @@ class User(SAFRSBase, Baseauthentication, db.Model, UserMixin):  # type: ignore
     password_hash = Column(String(200))
     allow_client_generated_ids = True
 
-    ApiList = relationship('Api', cascade_backrefs=True, backref='owner')
-    UserRoleList = relationship('UserRole', cascade_backrefs=True, backref='user')
+    ApiList = relationship('Api', cascade_backrefs=False, backref='owner')
+    UserRoleList = relationship('UserRole', cascade_backrefs=False, backref='user')
     
     # authentication-provider extension - password check
     def check_password(self, password=None):
@@ -144,7 +144,7 @@ class Api(SAFRSBase, Baseauthentication, db.Model, UserMixin):  # type: ignore
     connection_string = Column(String(64))
     owner_id = Column(ForeignKey('User.id'))
 
-    # see backref on parent: owner = relationship('User', cascade_backrefs=True, backref='ApiList')
+    # see backref on parent: owner = relationship('User', cascade_backrefs=False, backref='ApiList')
 
 
     @jsonapi_attr
@@ -175,8 +175,8 @@ class UserRole(SAFRSBase, Baseauthentication, db.Model, UserMixin):  # type: ign
     role_name = Column(ForeignKey('Role.name'), primary_key=True)
     allow_client_generated_ids = True
 
-    # see backref on parent: Role = relationship('Role', cascade_backrefs=True, backref='UserRoleList')
-    # see backref on parent: user = relationship('User', cascade_backrefs=True, backref='UserRoleList')
+    # see backref on parent: Role = relationship('Role', cascade_backrefs=False, backref='UserRoleList')
+    # see backref on parent: user = relationship('User', cascade_backrefs=False, backref='UserRoleList')
 
 
     @jsonapi_attr

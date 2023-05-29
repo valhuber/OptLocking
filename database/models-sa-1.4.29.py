@@ -83,7 +83,7 @@ class Customer(SAFRSBase, Base):
     Client_id = Column(Integer)
     allow_client_generated_ids = True
 
-    OrderList = relationship('Order', cascade_backrefs=False, backref='Customer')
+    OrderList = relationship('Order', cascade_backrefs=True, backref='Customer')
 
 
     @jsonapi_attr
@@ -141,11 +141,11 @@ class Department(SAFRSBase, Base):
     DepartmentId = Column(ForeignKey('Department.Id'))
     DepartmentName = Column(String(100))
 
-    # see backref on parent: Department = relationship('Department', remote_side=[Id], cascade_backrefs=False, backref='DepartmentList')
+    # see backref on parent: Department = relationship('Department', remote_side=[Id], cascade_backrefs=True, backref='DepartmentList')
 
-    Department = relationship('Department', remote_side=[Id], cascade_backrefs=False, backref='DepartmentList')  # special handling for self-relationships
-    EmployeeList = relationship('Employee', primaryjoin='Employee.OnLoanDepartmentId == Department.Id', cascade_backrefs=False, backref='Department')
-    EmployeeList1 = relationship('Employee', primaryjoin='Employee.WorksForDepartmentId == Department.Id', cascade_backrefs=False, backref='Department1')
+    Department = relationship('Department', remote_side=[Id], cascade_backrefs=True, backref='DepartmentList')  # special handling for self-relationships
+    EmployeeList = relationship('Employee', primaryjoin='Employee.OnLoanDepartmentId == Department.Id', cascade_backrefs=True, backref='Department')
+    EmployeeList1 = relationship('Employee', primaryjoin='Employee.WorksForDepartmentId == Department.Id', cascade_backrefs=True, backref='Department1')
 
 
     @jsonapi_attr
@@ -176,7 +176,7 @@ class Location(SAFRSBase, Base):
     notes = Column(String(256))
     allow_client_generated_ids = True
 
-    OrderList = relationship('Order', cascade_backrefs=False, backref='Location')
+    OrderList = relationship('Order', cascade_backrefs=True, backref='Location')
 
 
     @jsonapi_attr
@@ -214,7 +214,7 @@ class Product(SAFRSBase, Base):
     Discontinued = Column(Integer, nullable=False)
     UnitsShipped = Column(Integer)
 
-    OrderDetailList = relationship('OrderDetail', cascade_backrefs=False, backref='Product')
+    OrderDetailList = relationship('OrderDetail', cascade_backrefs=True, backref='Product')
 
 
     @jsonapi_attr
@@ -364,7 +364,7 @@ class Territory(SAFRSBase, Base):
     RegionId = Column(Integer, nullable=False)
     allow_client_generated_ids = True
 
-    EmployeeTerritoryList = relationship('EmployeeTerritory', cascade_backrefs=False, backref='Territory')
+    EmployeeTerritoryList = relationship('EmployeeTerritory', cascade_backrefs=True, backref='Territory')
 
 
     @jsonapi_attr
@@ -393,7 +393,7 @@ class Union(SAFRSBase, Base):
     Id = Column(Integer, primary_key=True)
     Name = Column(String(80))
 
-    EmployeeList = relationship('Employee', cascade_backrefs=False, backref='Union')
+    EmployeeList = relationship('Employee', cascade_backrefs=True, backref='Union')
 
 
     @jsonapi_attr
@@ -450,13 +450,13 @@ class Employee(SAFRSBase, Base):
     UnionId = Column(ForeignKey('Union.Id'))
     Dues = Column(DECIMAL)
 
-    # see backref on parent: Department = relationship('Department', primaryjoin='Employee.OnLoanDepartmentId == Department.Id', cascade_backrefs=False, backref='EmployeeList')
-    # see backref on parent: Union = relationship('Union', cascade_backrefs=False, backref='EmployeeList')
-    # see backref on parent: Department1 = relationship('Department', primaryjoin='Employee.WorksForDepartmentId == Department.Id', cascade_backrefs=False, backref='EmployeeList_Department1')
+    # see backref on parent: Department = relationship('Department', primaryjoin='Employee.OnLoanDepartmentId == Department.Id', cascade_backrefs=True, backref='EmployeeList')
+    # see backref on parent: Union = relationship('Union', cascade_backrefs=True, backref='EmployeeList')
+    # see backref on parent: Department1 = relationship('Department', primaryjoin='Employee.WorksForDepartmentId == Department.Id', cascade_backrefs=True, backref='EmployeeList_Department1')
 
-    EmployeeAuditList = relationship('EmployeeAudit', cascade_backrefs=False, backref='Employee')
-    EmployeeTerritoryList = relationship('EmployeeTerritory', cascade_backrefs=False, backref='Employee')
-    OrderList = relationship('Order', cascade_backrefs=False, backref='Employee')
+    EmployeeAuditList = relationship('EmployeeAudit', cascade_backrefs=True, backref='Employee')
+    EmployeeTerritoryList = relationship('EmployeeTerritory', cascade_backrefs=True, backref='Employee')
+    OrderList = relationship('Order', cascade_backrefs=True, backref='Employee')
 
 
     @jsonapi_attr
@@ -490,7 +490,7 @@ class EmployeeAudit(SAFRSBase, Base):
     EmployeeId = Column(ForeignKey('Employee.Id'))
     CreatedOn = Column(Text)
 
-    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=False, backref='EmployeeAuditList')
+    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=True, backref='EmployeeAuditList')
 
 
     @jsonapi_attr
@@ -521,8 +521,8 @@ class EmployeeTerritory(SAFRSBase, Base):
     TerritoryId = Column(ForeignKey('Territory.Id'))
     allow_client_generated_ids = True
 
-    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=False, backref='EmployeeTerritoryList')
-    # see backref on parent: Territory = relationship('Territory', cascade_backrefs=False, backref='EmployeeTerritoryList')
+    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=True, backref='EmployeeTerritoryList')
+    # see backref on parent: Territory = relationship('Territory', cascade_backrefs=True, backref='EmployeeTerritoryList')
 
 
     @jsonapi_attr
@@ -572,13 +572,13 @@ class Order(SAFRSBase, Base):
     OrderDetailCount = Column(Integer, server_default=text("0"))
     CloneFromOrder = Column(ForeignKey('Order.Id'))
 
-    # see backref on parent: parent = relationship('Order', remote_side=[Id], cascade_backrefs=False, backref='OrderList')
-    # see backref on parent: Location = relationship('Location', cascade_backrefs=False, backref='OrderList')
-    # see backref on parent: Customer = relationship('Customer', cascade_backrefs=False, backref='OrderList')
-    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=False, backref='OrderList')
+    # see backref on parent: parent = relationship('Order', remote_side=[Id], cascade_backrefs=True, backref='OrderList')
+    # see backref on parent: Location = relationship('Location', cascade_backrefs=True, backref='OrderList')
+    # see backref on parent: Customer = relationship('Customer', cascade_backrefs=True, backref='OrderList')
+    # see backref on parent: Employee = relationship('Employee', cascade_backrefs=True, backref='OrderList')
 
-    parent = relationship('Order', remote_side=[Id], cascade_backrefs=False, backref='OrderList')  # special handling for self-relationships
-    OrderDetailList = relationship('OrderDetail', cascade='all, delete', cascade_backrefs=False, backref='Order')  # manual fix
+    parent = relationship('Order', remote_side=[Id], cascade_backrefs=True, backref='OrderList')  # special handling for self-relationships
+    OrderDetailList = relationship('OrderDetail', cascade='all, delete', cascade_backrefs=True, backref='Order')  # manual fix
 
 
     @jsonapi_attr
@@ -613,8 +613,8 @@ class OrderDetail(SAFRSBase, Base):
     Amount = Column(DECIMAL)
     ShippedDate = Column(String(8000))
 
-    # see backref on parent: Order = relationship('Order', cascade_backrefs=False, backref='OrderDetailList')
-    # see backref on parent: Product = relationship('Product', cascade_backrefs=False, backref='OrderDetailList')
+    # see backref on parent: Order = relationship('Order', cascade_backrefs=True, backref='OrderDetailList')
+    # see backref on parent: Product = relationship('Product', cascade_backrefs=True, backref='OrderDetailList')
 
 
     @jsonapi_attr
