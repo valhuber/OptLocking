@@ -34,4 +34,11 @@ python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-ur
 
 sudo pip install pyyaml
 
-But, fails in flask_init: ModuleNotFoundError: No module named 'flask_swagger_ui'
+But, fails in safrs_init: ModuleNotFoundError: No module named 'flask_swagger_ui'
+
+6. Install flask_swagger_ui
+
+sudo pip install flask_swagger_ui
+
+But, fails in safrs_init: from flask.json import JSONEncoder
+
