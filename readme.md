@@ -12,12 +12,24 @@ Please click the link to see that file.
 
 With GA safrs, config was to use a global (GA) venv, which seemed to work.
 
-rc2 safrs requires the following:
+rc2 safrs requires the following (caution - still very brittle):
 
 1. Create a local venv:
 
-python3 -m venv venv; . venv/bin/activate; python3 -m pip install -r requirements.txt
+python3 -m venv venv; . venv/bin/activate
 
-2. Get the rc2 safrs
+2. Install ApiLogicServer
+
+pip install ApiLogicServer
+
+3. Update the local venv
+
+python3 -m pip install -r requirements.txt
+
+4. Get the rc2 safrs
 
 python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple  safrs==3.1.0rc2
+
+5. Install yaml (a surprise)
+
+sudo pip install pyyaml
