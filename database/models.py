@@ -57,7 +57,7 @@ class Category(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Customer(SAFRSBase, Base):
@@ -101,7 +101,7 @@ class Customer(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class CustomerDemographic(SAFRSBase, Base):
@@ -129,7 +129,7 @@ class CustomerDemographic(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Department(SAFRSBase, Base):
@@ -163,7 +163,7 @@ class Department(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Location(SAFRSBase, Base):
@@ -194,7 +194,7 @@ class Location(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Product(SAFRSBase, Base):
@@ -232,7 +232,7 @@ class Product(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Region(SAFRSBase, Base):
@@ -259,7 +259,7 @@ class Region(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class SampleDBVersion(SAFRSBase, Base):
@@ -286,7 +286,7 @@ class SampleDBVersion(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Shipper(SAFRSBase, Base):
@@ -314,7 +314,7 @@ class Shipper(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Supplier(SAFRSBase, Base):
@@ -351,7 +351,7 @@ class Supplier(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Territory(SAFRSBase, Base):
@@ -382,7 +382,7 @@ class Territory(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Union(SAFRSBase, Base):
@@ -411,7 +411,7 @@ class Union(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 t_sqlite_sequence = Table(
@@ -474,7 +474,7 @@ class Employee(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class EmployeeAudit(SAFRSBase, Base):
@@ -508,7 +508,7 @@ class EmployeeAudit(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class EmployeeTerritory(SAFRSBase, Base):
@@ -540,7 +540,7 @@ class EmployeeTerritory(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class Order(SAFRSBase, Base):
@@ -596,7 +596,7 @@ class Order(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_
 
 
 class OrderDetail(SAFRSBase, Base):
@@ -632,4 +632,4 @@ class OrderDetail(SAFRSBase, Base):
     def _check_sum_(self, value):  # type: ignore [no-redef]
         self._check_sum_property = value
 
-    CheckSum = _check_sum_
+    S_CheckSum = _check_sum_

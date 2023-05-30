@@ -131,83 +131,11 @@ Comments:
 
 You can explore this using the sample database with the cURL commands below.
 
-&nbsp;
-
-### Emp `Patch`
-
-**Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
-
-To simulate the client:
-1. Use cURL (note: this should fail with constraint violation):
-
-```curl
-curl -X 'PATCH' \
-  'http://localhost:5656/api/Employee/5/' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "data": {
-        "attributes": {
-            "Salary": 97000,
-            "CheckSum": 6785985870086950264,
-            "Proper_Salary": 50000,
-            "Id": 5},
-        "type": "Employee",
-        "id": 5
-    }
-}'
-```
-&nbsp;
-
-### Emp `Patch` no `CheckSum`
-
-**Important:** Admin App is not sending unchanged attributes; we must convince it to send the CheckSum.
-
-To simulate the client (same issue occurs in Admin App, which incidentally *should* return the `CheckSum`)
-1. Use cURL (note: this should fail with constraint violation):
-
-```curl
-curl -X 'PATCH' \
-  'http://localhost:5656/api/Employee/5/' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "data": {
-        "attributes": {
-            "Salary": 97000,
-            "Id": 5},
-        "type": "Employee",
-        "id": 5
-    }
-}'
-```
-&nbsp;
-
-
-### Category Get
-
-```
-curl -X 'GET' \
-  'http://localhost:5656/api/Category/1/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription%2CClient_id%2C_check_sum_%2CCheckSum' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/vnd.api+json'
-```
-Swagger:    "-4130312969102546939",
-curl:       "-4130312969102546939"
-
-```
-curl -X 'GET' \
-  'http://localhost:5656/api/Category/9/?fields%5BCategory%5D=Id%2CCategoryName%2CDescription%2CClient_id%2C_check_sum_%2CCheckSum' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/vnd.api+json'
-```
-
-Swagger:    83926768455664603
-curl:       83926768455664603
+Use the `No Security` run config.
 
 &nbsp;
 
-### Category `Patch` opt lock passes (pre-update checksum, no Null)
+### Category `Patch` missing S_Checksum lock passes (pre-update checksum, no Null)
 
 This should bypass optlock check and report "can't be x"
 
@@ -229,7 +157,7 @@ curl -X 'PATCH' \
 
 &nbsp;
 
-### Category `Patch` opt lock caught (No Null)
+### Category `Patch` S_Checksum mismmatch lock caught (No Null)
 
 This should fail "Sorry, row altered by another user..."
 
@@ -242,7 +170,7 @@ curl -X 'PATCH' \
   "data": {
     "attributes": {
       "Description": "x",
-      "CheckSum": "should fail"
+      "S_CheckSum": "should fail"
     },
     "type": "Category",
     "id": "1"
@@ -252,7 +180,7 @@ curl -X 'PATCH' \
 
 &nbsp;
 
-### Category 9 `Patch` opt lock passes (Null -> value)
+### Category 9 `Patch` valid S_CheckSum passes (Null -> value)
 
 Category 9 has null Description...
 
@@ -267,7 +195,7 @@ curl -X 'PATCH' \
   "data": {
     "attributes": {
       "Description": "x",
-      "CheckSum": "83926768455664603"
+      "S_CheckSum": "83926768455664603"
     },
     "type": "Category",
     "id": "9"
@@ -276,64 +204,14 @@ curl -X 'PATCH' \
 ```
 &nbsp;
 
-&nbsp;
-
-### Category 9 `Patch` opt lock passes (Null -> value, No CheckSum)
-
-This should bypass optlock check and report "can't be x"
-
-> FIXME: And *thought* it would fail with jsonapi patch removed... but it worked??
-
-> Trying to recreate the failure of behave tests for Order (below) - succeeds iff jsonapi patch active.  In patch, the hydrated pre-patch row has CheckSum='83926768455664603', patched is 
-
-```
-curl -X 'PATCH' \
-  'http://localhost:5656/api/Category/9/' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "data": {
-    "attributes": {
-      "Description": "x"
-    },
-    "type": "Category",
-    "id": "9"
-  }
-}'
-```
-&nbsp;
-
-### Category 9 `Patch` opt lock improperly raised (CheckSum absent, Null -> value)
-
-This should fail "Sorry, row altered by another user...".
-
-```
-curl -X 'PATCH' \
-  'http://localhost:5656/api/Category/9/' \
-  -H 'accept: application/vnd.api+json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "data": {
-    "attributes": {
-      "Description": "x",
-      "S_CheckSum": "should fail"
-    },
-    "type": "Category",
-    "id": "9"
-  }
-}'
-```
 
 ### Order 10643 Set Shipped (from null)
 
-This is failing in behave with OptLock error.  Fails here too.
+This case tests different attr ordering (per alias attribute), resulting in different checksums.  This is fixed in current versions by using same source for attr-list.
 
-Be sure to refresh `db.sqlite`.
+This works, result shows the order.
 
-On pre-patch, CheckSum = '6871253564541766803'
-
-Appears to be due to different attribute orders from old/new row, so different checksums.  Further, this appears to be due to renamed attribute; this is *not* the case for Category, so is presumably why it works.
-
+Be sure to replace the db.sqlite, since this changes it.
 
 ```
 curl -X 'PATCH' \
